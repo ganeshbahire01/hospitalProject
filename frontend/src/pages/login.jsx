@@ -2,7 +2,7 @@ import React from "react";
 
 const login = () => {
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 h-screen lg:px-8 bg-gradient-to-r from-yellow-50 to-slate-200">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
@@ -77,10 +77,10 @@ const login = () => {
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
           <a
-            href="#"
+            href="/signup"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Start a 14 day free trial
+            Sign-up Here!
           </a>
         </p>
       </div>
