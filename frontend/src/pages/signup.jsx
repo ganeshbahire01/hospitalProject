@@ -1,6 +1,20 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+
 
 const SignUp = () => {
+
+  const [formData, setFormData] = useState({ email: "", password: "", mobile: "", dob: "", sex: "" });
+
+  const submitFormData = async (e) => {
+    e.preventDefault();
+    const registerUser = await axios.post('/api/hello', formData);
+    toast.success(registerUser?.data?.message);
+  }
+
+
+
   return (
     <div className="flex h-screen min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gradient-to-r from-yellow-50 to-slate-200">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -10,7 +24,7 @@ const SignUp = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-4" action="#" method="POST">
+        <form className="space-y-4" onSubmit={submitFormData} action="#" method="POST">
           <div>
             <label
               htmlFor="email"
@@ -20,6 +34,7 @@ const SignUp = () => {
             </label>
             <div className="mt-2">
               <input
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 id="email"
                 name="email"
                 type="email"
@@ -41,6 +56,7 @@ const SignUp = () => {
             </div>
             <div className="mt-2">
               <input
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 id="password"
                 name="password"
                 type="password"
@@ -54,7 +70,7 @@ const SignUp = () => {
           <div>
             <div className="flex items-center justify-between">
               <label
-                htmlFor="password"
+                htmlFor="string"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Phone No.
@@ -62,56 +78,12 @@ const SignUp = () => {
             </div>
             <div className="mt-2">
               <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
+                id="mobile"
+                name="mobile"
+                type="string"
+                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                 className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </div>
-          </div>
-
-          <div className="flex gap-8">
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Height
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="number"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Weight
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="number"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
             </div>
           </div>
 
@@ -127,11 +99,10 @@ const SignUp = () => {
               </div>
               <div className="mt-2">
                 <input
-                  id="password"
-                  name="password"
+                  onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                  id="dob"
+                  name="dob"
                   type="date"
-                  autoComplete="current-password"
-                  required
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -146,7 +117,8 @@ const SignUp = () => {
                 </label>
               </div>
               <div className="mt-2 w-full">
-                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+                <select onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+                  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                   <option selected>Choose your gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -155,10 +127,6 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-
-
-
-
           <div>
             <button
               type="submit"
