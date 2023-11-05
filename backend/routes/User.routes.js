@@ -33,7 +33,7 @@ userRouter.post("/register", async (req, res) => {
     }
   } catch (err) {
     // error
-    res.status(400).send({ message: err.message });
+    res.status(200).send({ message: err.message });
   }
 });
 
@@ -62,16 +62,16 @@ userRouter.post("/login", async (req, res) => {
           });
         } else {
           // on Wrong Response --
-          res.status(400).send({ message: "Invalid password" });
+          res.status(200).send({ message: "Invalid password" });
         }
       });
     } else {
       // if email is not Present
-      res.status(400).send({ message: "Invalid email" });
+      res.status(200).send({ message: "Invalid email" });
     }
   } catch (err) {
     // on Error
-    res.status(400).send({ message: err.message });
+    res.status(200).send({ message: err.message });
   }
 });
 

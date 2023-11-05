@@ -1,8 +1,28 @@
-import React from "react";
+import { setTokenCookie } from "@/utils/cookie";
+import axios from "axios";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const submitFormData = async (e) => {
+    e.preventDefault();
+    const loginUser = await axios.post("/api/login", formData);
+    console.log({ loginUser });
+    if (loginUser?.data?.message == "Login successful") {
+      toast.success(loginUser?.data?.message);
+      const token = loginUser?.data?.token;
+      setTokenCookie("token", token, 30);
+    } else {
+      toast.error(loginUser?.data?.message);
+    }
+  };
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 h-screen lg:px-8 bg-gradient-to-r from-yellow-50 to-slate-200">
+    <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12  lg:px-8 bg-gradient-to-r from-yellow-50 to-slate-200">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
@@ -10,7 +30,12 @@ const login = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
+        <form
+          className="space-y-6"
+          onSubmit={submitFormData}
+          action="#"
+          method="POST"
+        >
           <div>
             <label
               htmlFor="email"
@@ -21,6 +46,9 @@ const login = () => {
             <div className="mt-2">
               <input
                 id="email"
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -51,6 +79,9 @@ const login = () => {
               <input
                 id="password"
                 name="password"
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 type="password"
                 autoComplete="current-password"
                 required

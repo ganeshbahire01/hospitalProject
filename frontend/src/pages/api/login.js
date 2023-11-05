@@ -6,8 +6,8 @@ const baseURL = "http://localhost:8080/users";
 export default async function handler(req, res) {
   try {
     const body = req?.body;
-    const register = await axios.post(baseURL + endpoints.POST_REGISTER, body);
-    return res.send(register?.data);
+    const login = await axios.post(baseURL + endpoints.POST_LOGIN, body);
+    return res.send(login?.data);
   } catch (error) {
     console.log(error);
   }
